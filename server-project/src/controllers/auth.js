@@ -18,7 +18,7 @@ const register = async (req, res) => {
 
     // Generar hash de la contraseña
     const salt = await bcrypt.genSalt(10);
-    const hashnew_password = await bcrypt.hash(new_password, salt);
+    const hash_password = await bcrypt.hash(new_password, salt);
     // Crear un nuevo usuario con los datos obtenidos de la API y la información del formulario
     const newUser = new User({
       firstname,
@@ -26,7 +26,7 @@ const register = async (req, res) => {
       email: email.toLowerCase(),
       role: "user",
       active: true,
-      password: hashnew_password,
+      new_password: hash_password,
     });
 
     // Guardar el nuevo usuario en la base de datos
@@ -41,17 +41,20 @@ const register = async (req, res) => {
 /* Función que permite iniciar sesión */
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  console.log('acáaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+  const { email, new_password } = req.body;
+  console.log(req.body);
   try {
-    if (!email || !password) {
+    if (!email || !new_password) {
       throw new Error("El email y la contraseña son obligatorios");
+      console.log('no recibe datos');
     }
     const emailLowerCase = email.toLowerCase();
     const userStore = await User.findOne({ email: emailLowerCase }).exec();
     if (!userStore) {
       throw new Error("El usuario no existe");
     }
-    const check = await bcrypt.compare(password, userStore.password);
+    const check = await bcrypt.compare(new_password, userStore.new_password);
     if (!check) {
       throw new Error("Contraseña incorrecta");
     }
@@ -64,6 +67,7 @@ const login = async (req, res) => {
     });
   } catch (error) {
     res.status(400).send({ msg: error.message });
+    console.log();
   }
 };
 

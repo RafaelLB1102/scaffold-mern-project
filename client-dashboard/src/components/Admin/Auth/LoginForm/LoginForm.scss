@@ -1,0 +1,8 @@
+@import '~/scss/index.scss';
+
+.login-form {
+    &__error {
+        color: $error !important;
+        text-align: center;
+    }
+}

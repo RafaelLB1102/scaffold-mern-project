@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Tab } from "semantic-ui-react";
 import { image } from "../../../assets/";
-import { RegisterForm } from "../../../components/Admin/Auth";
+import { RegisterForm, LoginForm } from "../../../components/Admin/Auth";
 import "./Auth.scss";
 
 export const Auth = () => {
   /* Para que cuando el usuario se registre pase a login */
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const openLogin = () => {
     setActiveIndex(0);
     console.log("Entre en tab");
@@ -18,7 +18,7 @@ export const Auth = () => {
       render: () => {
         return (
           <Tab.Pane>
-            <h2>Login form</h2>
+            <LoginForm />
           </Tab.Pane>
         );
       },
@@ -28,7 +28,7 @@ export const Auth = () => {
       render: () => {
         return (
           <Tab.Pane>
-            <RegisterForm openLogin={openLogin}></RegisterForm>
+            <RegisterForm openLogin={openLogin} />
           </Tab.Pane>
         );
       },
