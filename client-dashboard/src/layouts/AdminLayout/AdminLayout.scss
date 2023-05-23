@@ -7,10 +7,10 @@ $widthLeftMenu: 200px;
     flex-direction: row;
     max-height: 100vh;
     min-height: 100vh;
-    background-color: $background-grey;
+    background-color: #ffff;
 
     &__left {
-        background-color: $background-dark;
+        background-color: $background-grey;
         width: $widthLeftMenu;
 
         .logo {
@@ -33,7 +33,7 @@ $widthLeftMenu: 200px;
             align-items: center;
             padding: 10px;
             background-color: #ffff;
-            box-shadow: 0 0 10px 0 rgba(95, 92, 92, 0.1);
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
             z-index: 1;
 
             .user {

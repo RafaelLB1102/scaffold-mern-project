@@ -15,7 +15,7 @@ export const AuthProvider = (props) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const checkUserSession = async () => {
-      const { getAccessToken, getRefreshToken, logout } = authController;
+      const { getAccessToken, getRefreshToken } = authController;
       const accessToken = getAccessToken();
       const refreshToken = getRefreshToken();
       console.log(

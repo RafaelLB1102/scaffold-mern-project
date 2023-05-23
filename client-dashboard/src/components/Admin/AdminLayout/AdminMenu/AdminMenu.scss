@@ -1,0 +1,10 @@
+@import '~/src/scss/index.scss';
+.ui.menu.admin-menu{
+    >.item{
+        display: flex;
+        color: $text-light;
+        padding: 15px 20px !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+}
