@@ -1,37 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import "./LoginForm.form";
 import { Auth } from "../../../../api";
 import { Form } from "semantic-ui-react";
 import { useFormik } from "formik";
 import { initialValues, validationSchema } from "./LoginForm.form";
+import { useAuth } from "../../../../hooks";
 
 const authController = new Auth();
 
-export const LoginForm = (props) => {
-  const { openLogin } = props;
-  const [error, setError] = useState("");
+export const LoginForm = () => {
+  const { login } = useAuth();
 
   const formik = useFormik({
     initialValues: initialValues(),
     /* Validaciones de error */
     validationSchema: validationSchema(),
-    /* Sólo validamos cuando enviemos el formulario, no mientras se escribe */
     validateOnChange: false,
     validateOnBlur: false,
-    
+
     onSubmit: async (formValue) => {
       try {
-        setError("");
-        await authController.login(formValue);
-        openLogin();
+        const response = await authController.login(formValue);
+        login(response.access);
+        console.log(response);
       } catch (error) {
-        setError("Error en el servidor");
+        console.error(error);
       }
     },
   });
   return (
     <Form className="register-form" onSubmit={formik.handleSubmit}>
-     
       <Form.Input
         name="email"
         placeholder="Correo electrónico"
@@ -57,7 +55,6 @@ export const LoginForm = (props) => {
         content="Iniciar sesión"
         loading={formik.isSubmitting}
       />
-      {error && <p className="register-form__error">{error}</p>}
     </Form>
   );
 };

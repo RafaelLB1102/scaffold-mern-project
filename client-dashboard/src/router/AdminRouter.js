@@ -11,9 +11,11 @@ import {
   Menu,
 } from "../pages/admin";
 import { AdminLayout } from "../layouts";
+import { useAuth } from "../hooks";
 
-const user = null;
 export const AdminRouter = () => {
+  console.log(useAuth());
+  const {user} = useAuth();
   const paths = ["/admin", "/admin/home"];
   const loadLayout = (Layout, Page) => {
     return (
