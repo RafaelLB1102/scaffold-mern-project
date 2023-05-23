@@ -1,8 +1,18 @@
 @import '~/src/scss/index.scss';
 
 .register-form {
+    font-family: Arial, sans-serif;
+
     &__error {
+        font-family: Arial, sans-serif;
+
         color: $error !important;
         text-align: center;
     }
+}
+
+.register-form input,
+.register-form textarea,
+.register-form select {
+    font-family: Arial, sans-serif;
 }

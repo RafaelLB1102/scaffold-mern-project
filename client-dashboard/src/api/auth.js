@@ -53,4 +53,24 @@ export class Auth {
       throw error;
     }
   };
+
+  setAccessToken = (token) => {
+    localStorage.setItem(ENV.JWT.ACCESS, token);
+  };
+
+  setRefreshToken = (token) => {
+    localStorage.setItem(ENV.JWT.REFRESH, token);
+  };
+
+  getAccessToken = () => {
+    return localStorage.getItem(ENV.JWT.ACCESS);
+  };
+
+  getRefreshToken = () => {
+    return localStorage.getItem(ENV.JWT.REFRESH);
+  };
+  removeTokens = () => {
+    localStorage.removeItem(ENV.JWT.ACCESS);
+    localStorage.removeItem(ENV.JWT.REFRESH);
+  };
 }

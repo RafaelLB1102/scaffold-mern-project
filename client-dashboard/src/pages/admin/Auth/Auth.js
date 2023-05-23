@@ -39,7 +39,7 @@ export const Auth = () => {
       <img src={image.logo} alt="" className="logo" />
       <Tab
         panes={panels}
-        className="auth__form"
+        className="auth__form auth-form__tab"
         activeIndex={activeIndex}
         onTabChange={(_, data) => setActiveIndex(data.activeIndex)}
       />
