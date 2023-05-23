@@ -54,6 +54,30 @@ export class Auth {
     }
   };
 
+  refreshAccessToken = async (refreshToken) => {
+    const url = `${this.baseApi}/${API_ROUTES.REFRESH_TOKEN}`;
+    console.log(url);
+    const params = {
+      method: "POST",
+      body: JSON.stringify({ token: refreshToken }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    console.log(params);
+    try {
+      const response = await fetch(url, params);
+      if (!response.ok) {
+        throw new Error("Error en la solicitud: " + response.status);
+      }
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   setAccessToken = (token) => {
     localStorage.setItem(ENV.JWT.ACCESS, token);
   };

@@ -1,0 +1,57 @@
+@import '../../scss/index.scss';
+
+$widthLeftMenu: 200px;
+
+.admin-layout {
+    display: flex;
+    flex-direction: row;
+    max-height: 100vh;
+    min-height: 100vh;
+    background-color: $background-grey;
+
+    &__left {
+        background-color: $background-dark;
+        width: $widthLeftMenu;
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30px;
+
+            img {
+                width: 80%;
+            }
+        }
+    }
+
+    &__right {
+        width: calc(100% - $widthLeftMenu);
+        &-header{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px;
+            background-color: #ffff;
+            box-shadow: 0 0 10px 0 rgba(95, 92, 92, 0.1);
+            z-index: 1;
+
+            .user {
+                display: flex;
+                align-items: center;
+
+                .avatar {
+                    width: 40px;
+                    height: 0px;
+                    border-radius: 50%;
+                    background-color: $background-grey;
+                    margin-right: 10px;
+                }
+            }
+        }
+        .content {
+            position: relative;
+            margin: 20px;
+        }
+    }
+}

@@ -1,7 +1,9 @@
-import React from 'react'
+import React from "react";
 
 export const Menu = () => {
   return (
-    <div>Menu</div>
-  )
-}
+    <div>
+      <h2>Menu works!</h2>
+    </div>
+  );
+};

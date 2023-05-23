@@ -1,7 +1,9 @@
-import React from 'react'
+import React from "react";
 
 export const Users = () => {
   return (
-    <div>Users</div>
-  )
-}
+    <div>
+      <h2>Users works!</h2>
+    </div>
+  );
+};

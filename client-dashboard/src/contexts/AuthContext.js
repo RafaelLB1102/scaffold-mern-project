@@ -1,6 +1,7 @@
 //Mover estado a nivel global de la aplicación
 import { useState, useEffect, createContext } from "react";
 import { User, Auth } from "../api";
+import { hasExpiredToken } from "../utils";
 
 const userController = new User();
 const authController = new Auth();
@@ -13,23 +14,34 @@ export const AuthProvider = (props) => {
   // La sgte variable intentara recuperar la sesión del usuario
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    (async () => {
-      //Comprobar si el usuario esta logueado o no
-      const accessToken = authController.getAccessToken();
-      const refreshToken = authController.getRefreshToken();
+    const checkUserSession = async () => {
+      const { getAccessToken, getRefreshToken, logout } = authController;
+      const accessToken = getAccessToken();
+      const refreshToken = getRefreshToken();
       console.log(
-        `accessToken= ${accessToken}\n refreshToken= ${refreshToken}`
+        `accessToken = ${accessToken}\nrefreshToken = ${refreshToken}`
       );
-      if (!accessToken && !refreshToken) {
+
+      if (!accessToken || !refreshToken) {
         logout();
         setLoading(false);
         return;
       }
-      /* Para poder visualizar nuevamente el contenido del usuario que inicio sesión
-    hay que cambiar el estado de loading, de lo contrario, la pág queda en blanco
-    Todo debe estar dentro de una función asincrona esperando que loading termine */
+
+      if (hasExpiredToken(accessToken)) {
+        if (hasExpiredToken(refreshToken)) {
+          logout();
+        } else {
+          await relogin(refreshToken);
+        }
+      } else {
+        await login(accessToken);
+      }
+
       setLoading(false);
-    })();
+    };
+
+    checkUserSession();
   }, []);
 
   const login = async (accessToken) => {
@@ -44,7 +56,18 @@ export const AuthProvider = (props) => {
     }
   };
 
-  const logout = async () => {
+  const relogin = async (refreshToken) => {
+    try {
+      const response = await authController.refreshAccessToken(refreshToken);
+      authController.setAccessToken(response.access);
+      setToken(response.access);
+      await login(response.access);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const logout = () => {
     setUser(null);
     setToken(null);
     authController.removeTokens();
@@ -54,6 +77,7 @@ export const AuthProvider = (props) => {
     accessToken: token,
     user,
     login,
+    logout,
   };
 
   if (loading) return null;
